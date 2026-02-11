@@ -38,13 +38,13 @@ class RidesService {
     Location? departureLocation,
     int? requestedSeats,
   }) {
-    List<Ride> filter = [];
+    List<Ride> filter = availableRides;
     if (departureLocation != null) {
       filter = _filterByDeparture(departureLocation);
     }
 
     if (requestedSeats != null) {
-      filter = _filterBySeatRequested(requestedSeats);
+      filter = filter.where((d) => d.availableSeats >= requestedSeats).toList();
     }
 
     return filter;
