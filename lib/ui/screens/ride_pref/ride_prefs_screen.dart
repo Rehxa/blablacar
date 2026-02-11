@@ -1,3 +1,5 @@
+import 'package:blabla/ui/widgets/actions/blabutton.dart';
+
 import '../../../model/ride_pref/ride_pref.dart';
 import '../../../service/ride_prefs_service.dart';
 import 'package:flutter/material.dart';
@@ -38,37 +40,46 @@ class RidePrefsScreen extends StatelessWidget {
         ),
         SizedBox(height: 100),
 
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: BlaSpacings.xxl),
-          decoration: BoxDecoration(
-            color: Colors.white, // White background
-            borderRadius: BorderRadius.circular(16), // Rounded corners
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // 2 - THE FORM
-              RidePrefForm(initRidePref: RidePrefService.currentRidePref),
-              SizedBox(height: BlaSpacings.m),
+        Column(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: BlaSpacings.xxl),
+              decoration: BoxDecoration(
+                color: Colors.black, // White background
+                borderRadius: BorderRadius.circular(16), // Rounded corners
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // 2 - THE FORM
+                  RidePrefForm(initRidePref: RidePrefService.currentRidePref),
+                  SizedBox(height: BlaSpacings.m),
 
-              // 3 - THE HISTORY
-              SizedBox(
-                height: 200, // Set a fixed height
-                child: ListView.builder(
-                  shrinkWrap: true, // Fix ListView height issue
-                  physics: AlwaysScrollableScrollPhysics(),
-                  itemCount: RidePrefService.ridePrefsHistory.length,
-                  itemBuilder: (ctx, index) => RidePrefsTile(
-                    ridePref: RidePrefService.ridePrefsHistory[index],
-                    onPressed: () => onRidePrefSelected(
-                      RidePrefService.ridePrefsHistory[index],
+                  // 3 - THE HISTORY
+                  SizedBox(
+                    height: 200, // Set a fixed height
+                    child: ListView.builder(
+                      shrinkWrap: true, // Fix ListView height issue
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemCount: RidePrefService.ridePrefsHistory.length,
+                      itemBuilder: (ctx, index) => RidePrefsTile(
+                        ridePref: RidePrefService.ridePrefsHistory[index],
+                        onPressed: () => onRidePrefSelected(
+                          RidePrefService.ridePrefsHistory[index],
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+            BlaButton(
+              onPressed: () {},
+              label: "Search",
+              buttonType: ButtonType.primary,
+            ),
+          ],
         ),
       ],
     );

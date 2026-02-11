@@ -1,4 +1,4 @@
-import 'package:blabla/ui/screens/ride_pref/widgets/blabutton.dart';
+import 'package:blabla/ui/widgets/actions/blabutton.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,6 +26,12 @@ class TestScreen extends StatelessWidget {
               label: "Request to book",
               buttonType: ButtonType.primary,
               iconData: Icons.calendar_month_sharp,
+            ),
+            const SizedBox(height: 20),
+            BlaButton(
+              onPressed: () {},
+              label: "No icon",
+              buttonType: ButtonType.primary,
             ),
           ],
         ),
