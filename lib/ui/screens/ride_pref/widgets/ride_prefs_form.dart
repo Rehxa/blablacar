@@ -1,4 +1,5 @@
 import 'package:blabla/ui/screens/ride_pref/widgets/location_picker.dart';
+import 'package:blabla/ui/screens/ride_pref/widgets/ride_screen.dart';
 import 'package:blabla/ui/theme/theme.dart';
 import 'package:blabla/ui/widgets/actions/blabutton.dart';
 import 'package:blabla/utils/animations_util.dart';
@@ -120,6 +121,11 @@ class _RidePrefFormState extends State<RidePrefForm> {
         departureDate: departureDate,
         arrival: arrival!,
         requestedSeats: requestedSeats,
+      );
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RideScreen(ridePref: newPref)),
       );
     }
   }
