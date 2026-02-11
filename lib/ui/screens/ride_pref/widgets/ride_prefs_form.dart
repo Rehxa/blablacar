@@ -1,5 +1,6 @@
 import 'package:blabla/ui/screens/ride_pref/widgets/location_picker.dart';
 import 'package:blabla/ui/screens/ride_pref/widgets/ride_screen.dart';
+import 'package:blabla/ui/screens/ride_pref/widgets/seat_booking.dart';
 import 'package:blabla/ui/theme/theme.dart';
 import 'package:blabla/ui/widgets/actions/blabutton.dart';
 import 'package:blabla/utils/animations_util.dart';
@@ -71,6 +72,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
 
         _departureController.text = departure?.name ?? "";
         _arrivalController.text = arrival?.name ?? "";
+        _requestedSeats.text = requestedSeats.toString();
       });
     }
   }
@@ -80,6 +82,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
     super.dispose();
     _departureController.dispose();
     _arrivalController.dispose();
+    _requestedSeats.dispose();
   }
 
   void onSwap() {
@@ -140,6 +143,20 @@ class _RidePrefFormState extends State<RidePrefForm> {
     if (searchLocation != null) {
       setState(() {
         controller.text = searchLocation.name;
+      });
+    }
+  }
+
+  Future<void> onSeat(TextEditingController controller) async {
+    final int? numOfSeats = await Navigator.push(
+      context,
+      AnimationUtils.createBottomToTopRoute<int>(
+        SeatBooking(numOfSeats: int.tryParse(controller.text)!),
+      ),
+    );
+    if (numOfSeats != null) {
+      setState(() {
+        controller.text = numOfSeats.toString();
       });
     }
   }
@@ -219,6 +236,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
                 ),
               ),
               TextFormField(
+                readOnly: true,
+                onTap: () => onSeat(_requestedSeats),
                 controller: _requestedSeats,
                 decoration: InputDecoration(
                   hintText: requestedSeats.toString(),
