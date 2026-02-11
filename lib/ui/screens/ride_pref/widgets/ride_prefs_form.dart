@@ -75,6 +75,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
   @override
   void dispose() {
     super.dispose();
+    _departureController.dispose();
+    _arrivalController.dispose();
   }
 
   void onSwap() {
