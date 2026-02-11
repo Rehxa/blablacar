@@ -1,6 +1,7 @@
 import 'package:blabla/ui/screens/ride_pref/widgets/location_picker.dart';
 import 'package:blabla/ui/theme/theme.dart';
 import 'package:blabla/ui/widgets/actions/blabutton.dart';
+import 'package:blabla/utils/animations_util.dart';
 import 'package:blabla/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -126,8 +127,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
   Future<void> onLocation(TextEditingController controller) async {
     final Location? searchLocation = await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => LocationPicker(locationSearch: controller.text),
+      AnimationUtils.createBottomToTopRoute<Location>(
+        LocationPicker(locationSearch: controller.text),
       ),
     );
     if (searchLocation != null) {
