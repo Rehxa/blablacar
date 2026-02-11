@@ -1,3 +1,4 @@
+import 'package:blabla/ui/screens/ride_pref/widgets/location_picker.dart';
 import 'package:blabla/ui/theme/theme.dart';
 import 'package:blabla/ui/widgets/actions/blabutton.dart';
 import 'package:blabla/utils/date_time_utils.dart';
@@ -84,6 +85,10 @@ class _RidePrefFormState extends State<RidePrefForm> {
       final swap = departure;
       departure = arrival;
       arrival = swap;
+
+      final String swapController = _departureController.text;
+      _departureController.text = _arrivalController.text;
+      _arrivalController.text = swapController;
     });
   }
 
@@ -118,19 +123,35 @@ class _RidePrefFormState extends State<RidePrefForm> {
     }
   }
 
+  Future<void> onLocation(TextEditingController controller) async {
+    final Location? searchLocation = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LocationPicker(locationSearch: controller.text),
+      ),
+    );
+    if (searchLocation != null) {
+      setState(() {
+        controller.text = searchLocation.name;
+      });
+    }
+  }
+
   // ----------------------------------
   // Compute the widgets rendering
   // ----------------------------------
   String get dateFormat => DateTimeUtils.formatDateTime(departureDate);
 
-  bool get checkBothLoction =>
-      departure != null && arrival != null ? true : false;
+  bool get checkBothLocation =>
+      _departureController.text != "" && _arrivalController.text != ""
+      ? true
+      : false;
 
   Color get textColor => widget.initRidePref != null
       ? BlaColors.neutralDark
       : BlaColors.neutralLight;
 
-  Widget get iconButton => checkBothLoction
+  Widget get iconButton => checkBothLocation
       ? IconButton(
           onPressed: onSwap,
           icon: Icon(Icons.swap_vert),
@@ -151,7 +172,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
           child: Column(
             children: [
               TextFormField(
-                // readOnly: true,
+                readOnly: true,
+                onTap: () => onLocation(_departureController),
                 controller: _departureController,
                 decoration: InputDecoration(
                   hintText: departure?.name ?? "Leaving from",
@@ -164,6 +186,8 @@ class _RidePrefFormState extends State<RidePrefForm> {
                 ),
               ),
               TextFormField(
+                readOnly: true,
+                onTap: () => onLocation(_arrivalController),
                 controller: _arrivalController,
                 decoration: InputDecoration(
                   hintText: arrival?.name ?? "Going to",
