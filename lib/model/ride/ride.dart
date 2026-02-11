@@ -1,14 +1,9 @@
+import 'package:blabla/utils/date_time_utils.dart';
 
-import '../../utils/date_time_util.dart';
 import '../user/user.dart';
 import 'locations.dart';
 
-enum RideStatus {
-  created,
-  published,
-  ongoing,
-  finished;
-}
+enum RideStatus { created, published, ongoing, finished }
 
 ///
 /// This model describes a  Ride.

@@ -14,11 +14,23 @@ const String blablaHomeImagePath = 'assets/images/blabla_home.png';
 /// - Enter his/her ride preference and launch a search on it
 /// - Or select a last entered ride preferences and launch a search on it
 ///
-class RidePrefsScreen extends StatelessWidget {
+class RidePrefsScreen extends StatefulWidget {
   const RidePrefsScreen({super.key});
 
+  @override
+  State<RidePrefsScreen> createState() => _RidePrefsScreenState();
+}
+
+class _RidePrefsScreenState extends State<RidePrefsScreen> {
   void onRidePrefSelected(RidePref ridePref) {
     // TODO
+    setState(() {
+      RidePrefService.currentRidePref = ridePref;
+    });
+    // print(ridePref);
+    print(RidePrefService.currentRidePref);
+
+    print("click");
   }
 
   @override
@@ -40,46 +52,37 @@ class RidePrefsScreen extends StatelessWidget {
         ),
         SizedBox(height: 100),
 
-        Column(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: BlaSpacings.xxl),
-              decoration: BoxDecoration(
-                color: Colors.black, // White background
-                borderRadius: BorderRadius.circular(16), // Rounded corners
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // 2 - THE FORM
-                  RidePrefForm(initRidePref: RidePrefService.currentRidePref),
-                  SizedBox(height: BlaSpacings.m),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: BlaSpacings.xxl),
+          decoration: BoxDecoration(
+            color: Colors.white, // White background
+            borderRadius: BorderRadius.circular(16), // Rounded corners
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // 2 - THE FORM
+              RidePrefForm(initRidePref: RidePrefService.currentRidePref),
+              SizedBox(height: BlaSpacings.m),
 
-                  // 3 - THE HISTORY
-                  SizedBox(
-                    height: 200, // Set a fixed height
-                    child: ListView.builder(
-                      shrinkWrap: true, // Fix ListView height issue
-                      physics: AlwaysScrollableScrollPhysics(),
-                      itemCount: RidePrefService.ridePrefsHistory.length,
-                      itemBuilder: (ctx, index) => RidePrefsTile(
-                        ridePref: RidePrefService.ridePrefsHistory[index],
-                        onPressed: () => onRidePrefSelected(
-                          RidePrefService.ridePrefsHistory[index],
-                        ),
-                      ),
+              // 3 - THE HISTORY
+              SizedBox(
+                height: 200, // Set a fixed height
+                child: ListView.builder(
+                  shrinkWrap: true, // Fix ListView height issue
+                  physics: AlwaysScrollableScrollPhysics(),
+                  itemCount: RidePrefService.ridePrefsHistory.length,
+                  itemBuilder: (ctx, index) => RidePrefsTile(
+                    ridePref: RidePrefService.ridePrefsHistory[index],
+                    onPressed: () => onRidePrefSelected(
+                      RidePrefService.ridePrefsHistory[index],
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-            BlaButton(
-              onPressed: () {},
-              label: "Search",
-              buttonType: ButtonType.primary,
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

@@ -10,11 +10,12 @@ class RidePref {
   final Location arrival;
   final int requestedSeats;
 
-  const RidePref(
-      {required this.departure,
-      required this.departureDate,
-      required this.arrival,
-      required this.requestedSeats});
+  const RidePref({
+    required this.departure,
+    required this.departureDate,
+    required this.arrival,
+    required this.requestedSeats,
+  });
 
   @override
   String toString() {

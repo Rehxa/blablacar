@@ -18,6 +18,7 @@ class RidePrefsTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onPressed,
       leading: Icon(Icons.history, color: BlaColors.iconLight),
 
       title: Text(title, style: BlaTextStyles.body),
